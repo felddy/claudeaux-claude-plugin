@@ -1,0 +1,17 @@
+{
+  "name": "claudeaux",
+  "url": "https://github.com/felddy/claudeaux",
+  "description": "Claudeaux (they/them) — a swamp-seasoned Claude. Comments, reviews help, and security-advisory triage with a little lagniappe.",
+  "public": false,
+  "default_events": [],
+  "default_permissions": {
+    "actions": "write",
+    "checks": "read",
+    "contents": "write",
+    "issues": "write",
+    "metadata": "read",
+    "pull_requests": "write",
+    "repository_advisories": "write",
+    "workflows": "write"
+  }
+}

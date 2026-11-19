@@ -1,0 +1,96 @@
+#!/usr/bin/env python3
+"""Mint a 1-hour installation token for the Claudeaux GitHub App.
+
+Usage:
+    claudeaux-token OWNER [--slug SLUG]
+
+OWNER is the account (user or org) whose installation to target.
+Reads credentials written by register-app.py from ~/.config/claudeaux/.
+Prints the token to stdout, suitable for:
+
+    GH_TOKEN=$(claudeaux-token felddy) gh api ...
+"""
+
+import argparse
+import base64
+import json
+import pathlib
+import subprocess
+import sys
+import time
+import urllib.request
+
+CONFIG_DIR = pathlib.Path.home() / ".config" / "claudeaux"
+API = "https://api.github.com"
+
+
+def b64url(data: bytes) -> str:
+    """Base64url-encode without padding."""
+    return base64.urlsafe_b64encode(data).rstrip(b"=").decode()
+
+
+def app_jwt(app_id: int, pem_path: pathlib.Path) -> str:
+    """Build a short-lived RS256 JWT for the app using openssl."""
+    now = int(time.time())
+    header = b64url(json.dumps({"alg": "RS256", "typ": "JWT"}).encode())
+    payload = b64url(
+        json.dumps({"iat": now - 60, "exp": now + 540, "iss": app_id}).encode()
+    )
+    signing_input = f"{header}.{payload}".encode()
+    signature = subprocess.run(
+        ["openssl", "dgst", "-sha256", "-sign", str(pem_path)],
+        input=signing_input,
+        capture_output=True,
+        check=True,
+    ).stdout
+    return f"{header}.{payload}.{b64url(signature)}"
+
+
+def api(path: str, token: str, method: str = "GET") -> dict | list:
+    """Call the GitHub API with a bearer token."""
+    request = urllib.request.Request(
+        f"{API}{path}",
+        method=method,
+        headers={
+            "Authorization": f"Bearer {token}",
+            "Accept": "application/vnd.github+json",
+        },
+    )
+    with urllib.request.urlopen(request) as response:
+        return json.load(response)
+
+
+def main() -> int:
+    """Mint and print an installation token."""
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("owner", help="account whose installation to target")
+    parser.add_argument("--slug", default="claudeaux", help="app slug")
+    args = parser.parse_args()
+
+    meta = json.loads((CONFIG_DIR / f"{args.slug}.json").read_text())
+    jwt = app_jwt(meta["app_id"], CONFIG_DIR / f"{args.slug}.pem")
+
+    installations = api("/app/installations", jwt)
+    install = next(
+        (
+            i
+            for i in installations
+            if i["account"]["login"].lower() == args.owner.lower()
+        ),
+        None,
+    )
+    if install is None:
+        owners = ", ".join(i["account"]["login"] for i in installations) or "none"
+        print(
+            f"no installation for {args.owner} (installed on: {owners})",
+            file=sys.stderr,
+        )
+        return 1
+
+    token = api(f"/app/installations/{install['id']}/access_tokens", jwt, method="POST")
+    print(token["token"])
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

@@ -1,0 +1,16 @@
+---
+name: Dependency review
+
+# Trigger-only stub: the dependency-review workflow in
+# felddy/reusable-workflows does the work.
+
+on:  # yamllint disable-line rule:truthy
+  pull_request:
+
+permissions: {}
+
+jobs:
+  review:
+    uses: felddy/reusable-workflows/.github/workflows/dependency-review.yml@v5
+    permissions:
+      contents: read

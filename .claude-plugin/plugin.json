@@ -1,0 +1,9 @@
+{
+  "name": "claudeaux",
+  "version": "0.1.0",
+  "description": "Claudeaux: a swamp-seasoned Claude persona and GitHub collaboration conventions — voice, review workflow, and GitHub App identity helpers.",
+  "author": {
+    "name": "Mark Feldhousen",
+    "url": "https://github.com/felddy"
+  }
+}

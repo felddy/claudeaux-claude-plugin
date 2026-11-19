@@ -1,0 +1,10 @@
+# App credentials never enter this repository.
+*.pem
+*.key
+*.p12
+.env
+.env.*
+
+# Local scratch
+__pycache__/
+.DS_Store

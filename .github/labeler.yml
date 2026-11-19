@@ -1,0 +1,20 @@
+---
+plugin:
+  - changed-files:
+      - any-glob-to-any-file:
+          - .claude-plugin/**
+          - skills/**
+app:
+  - changed-files:
+      - any-glob-to-any-file:
+          - app/**
+          - scripts/**
+ci:
+  - changed-files:
+      - any-glob-to-any-file:
+          - .github/**
+documentation:
+  - changed-files:
+      - any-glob-to-any-file:
+          - "**/*.md"
+          - assets/**

@@ -1,0 +1,18 @@
+---
+name: Lint
+
+# Trigger-only stub: the common-lint workflow in
+# felddy/reusable-workflows runs this repository's pre-commit hooks.
+
+on:  # yamllint disable-line rule:truthy
+  pull_request:
+  push:
+  workflow_dispatch:
+
+permissions: {}
+
+jobs:
+  lint:
+    uses: felddy/reusable-workflows/.github/workflows/common-lint.yml@v5
+    permissions:
+      contents: read
