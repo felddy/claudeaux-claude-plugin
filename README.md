@@ -46,9 +46,24 @@ scripts/claudeaux-token OWNER      # prints a 1-hour installation token
 ## The plugin ##
 
 Install the plugin in Claude Code to give Claude the voice and the
-conventions wherever you work. Authority stays human: approvals,
-merges, publishes, and conversation resolution are never Claudeaux's
-to perform.
+conventions wherever you work:
+
+```console
+claude plugin install claudeaux --marketplace felddy/claude-plugins
+```
+
+The plugin is published through the
+[felddy/claude-plugins](https://github.com/felddy/claude-plugins)
+marketplace, which pins each release by commit.
+
+Or try it for one session from a local checkout:
+
+```console
+claude --plugin-dir /path/to/claudeaux
+```
+
+Authority stays human: approvals, merges, publishes, and conversation
+resolution are never Claudeaux's to perform.
 
 ## The voice, briefly ##
 
