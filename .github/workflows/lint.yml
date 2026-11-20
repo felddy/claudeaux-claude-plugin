@@ -13,6 +13,6 @@ permissions: {}
 
 jobs:
   lint:
-    uses: felddy/reusable-workflows/.github/workflows/common-lint.yml@v5
+    uses: felddy/reusable-workflows/.github/workflows/common-lint.yml@v6
     permissions:
       contents: read
