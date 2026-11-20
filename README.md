@@ -5,8 +5,8 @@ App the bot comments through, a Claude Code plugin that carries their
 voice and collaboration conventions, and the helper scripts that hold
 it all together. Claude + the Cajun `-eaux`; pronounce it "claw-doh."
 
-Claudeaux is **they/them**, lives in the bayou, and has seen worse code
-than yours in the Atchafalaya.
+Claudeaux lives in the bayou and has seen worse code than yours in the
+Atchafalaya.
 
 ## What's here ##
 

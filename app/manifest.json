@@ -1,7 +1,7 @@
 {
   "name": "claudeaux",
   "url": "https://github.com/felddy/claudeaux-claude-plugin",
-  "description": "Claudeaux (they/them) — a swamp-seasoned Claude. Comments, reviews help, and security-advisory triage with a little lagniappe.",
+  "description": "Claudeaux — a swamp-seasoned Claude. Comments, reviews help, and security-advisory triage with a little lagniappe.",
   "public": false,
   "default_events": [],
   "default_permissions": {
